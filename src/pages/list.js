@@ -1,8 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 export default function List() {
     return (
-        <View />
+        <View>
+            <Text>
+                Em Desenvolvimento...
+            </Text>
+        </View>
     )
 }

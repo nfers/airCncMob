@@ -1,16 +1,36 @@
-import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, KeyboardAvoidingView, Platform, 
+    StyleSheet, Text, TextInput, 
+    AsyncStorage, TouchableOpacity, Image } from 'react-native';
 
 import logo from '../assets/logo.png';
 import api from '../services/api';
 
-export default function Login() {
+export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
     const [techs, setTechs] = useState('');
 
+    useEffect(() => {
+        AsyncStorage.getItem('user').then(user => {
+            if (user) {
+                navigation.navigate('List');
+            }
+        })
+    }, []);
+
+
     async function handleSubmit() {
-        console.log(email);
-  
+        const response = await api.post('http://192.168.56.1:3031/sessions', {
+            email
+        })
+
+        const { _id } = response.data;
+        console.log(_id);
+
+        await AsyncStorage.setItem('user', _id);
+        await AsyncStorage.setItem('techs', techs);
+        
+        navigation.navigate('List');
     }
 
     return (
