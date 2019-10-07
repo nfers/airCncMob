@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 
 import logo from '../assets/logo.png';
+import api from '../services/api';
 
 export default function Login() {
+    const [email, setEmail] = useState('');
+    const [techs, setTechs] = useState('');
+
+    async function handleSubmit() {
+        console.log(email);
+  
+    }
+
     return (
         /*tratamento para quando o usuario for digitar o email
         nos celulares IOS, o teclado não sobreponha o botão 
@@ -20,6 +29,8 @@ export default function Login() {
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false} //não permite corrigir o que o usuario digitou 
+                    value={email}
+                    onChangeText={setEmail}
                 />               
                 <Text style={styles.label}> Tecnologias*</Text>
                 <TextInput
@@ -27,9 +38,11 @@ export default function Login() {
                     placeholder="Tecnologias de interesse"
                     placeholderTextColor="#999"
                     autoCapitalize="words"
-                    autoCorrect={false} //não permite corrigir o que o usuario digitou 
+                    autoCorrect={false} 
+                    value={techs}
+                    onChangeText={setTechs}
                 />               
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                     <Text style={styles.buttonText}>Encontrar Spots</Text>
                 </TouchableOpacity>
             </View>
